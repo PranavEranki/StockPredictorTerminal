@@ -27,18 +27,18 @@ Finally, it will plot the growth of the stock from about a year ago up till the 
 
 3. If you do not have them already, install python and pip.
 
-4. Do 'Pip install -r requirements.txt' to install the dependencies
+4. Do 'Pip install -r requirements.txt' to install the dependencies.
 
 5. Go to Quandl.com and sign up for an account.
 
-6. Either save the quandl api key to an environmental variable or have the key ready to be entered
+6. Either save the quandl api key to an environmental variable or have the key ready to be entered.
 
 ## Running the script
 
 7. Run the script. You will need to enter:
-  * key or environmental variable name for the key
-  * Stock abbreviation for the desired stock
-  * How many days into the future you want to predict
+  *   key or environmental variable name for the key
+  *   Stock abbreviation for the desired stock
+  *   How many days into the future you want to predict
 
 when prompted.
 
