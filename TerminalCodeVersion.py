@@ -15,44 +15,44 @@ def getKey():
     while (saved.lower()!='yes' and saved.lower()!='no'):
         print("Invalid response")
         saved = input(e_prompt)
-        
+
     if saved.lower == 'yes':
         environ_name = input(key_e_prompt)
         quandl.ApiConfig.api_key = os.environ.get(str(environ_name))
     else:
         quandl.ApiConfig.api_key = input(key_prompt)
-        
-        
+
+
 def getNameAndForecast():
     name = input("What is the abbreviation for the Stock you wish to view? ")
-    forecast = input("How far into the future would you like to predict? ")
+    forecast = input("How many days into the future would you like to predict? ")
     forecast = int(forecast)
     return name,forecast
-    
 
-def getData(name):   
-    
+
+def getData(name):
+
     data = quandl.get("WIKI/" + name)
     return data
-    
+
 
 def preprocess(data, forecast):
-    
+
     data = data[['Adj. Close']]
     data['Prediction'] = data[['Adj. Close']].shift(-forecast)
-    
+
     X = np.array(data.drop(['Prediction'], 1))
     X = preprocessing.scale(X)
-    
+
     X_forecast = X[-forecast:] # set X_forecast equal to last forecast days
     X = X[:-forecast]
-    
+
     y = np.array(data['Prediction'])
     y = y[:-forecast]
-   
+
     X_train = X
     y_train = y.reshape((y.shape[0],1))
-    
+
     return X_forecast,X_train,y_train
 
 
@@ -60,8 +60,8 @@ def makeSpace():
     print()
     print()
     print()
-    
-    
+
+
 def oldPlot(y,name):
     makeSpace()
     plt.figure()
@@ -69,18 +69,22 @@ def oldPlot(y,name):
     plt.plot(y)
     plt.ylabel('Price')
     plt.xlabel('Days since founded')
+    matplotlib.pyplot.show()
+    plt.show(block=True)
     makeSpace()
-    
-    
+
+
 def newPlot(y,name):
     plt.figure()
     plt.title("Predicted values for " + name)
     plt.plot(y)
     plt.ylabel('Price')
     plt.xlabel('Days into the future')
+    matplotlib.pyplot.show()
+    plt.show(block=True)
     makeSpace()
-    
-    
+
+
 def allPlot(y,yhat,backset,name):
     plt.figure()
     all_y = np.concatenate((y[(y.shape[0]-backset):,:],yhat),axis=0)
@@ -88,33 +92,36 @@ def allPlot(y,yhat,backset,name):
     plt.plot(all_y)
     plt.ylabel('Price')
     plt.xlabel('Days since founded')
+    matplotlib.pyplot.show()
+    plt.show(block=True)
     makeSpace()
-    
+
 def predict(name,forecast):
     data = getData(name)
     X_forecast,X_train,y_train = preprocess(data,forecast)
-    
+
     regressor = LinearRegression()
     regressor.fit(X_train,y_train)
-    
+
     forecast_prediction = regressor.predict(X_forecast)
     forecast_prediction = forecast_prediction.reshape((forecast,1))
     #Visualizing trends in data. My Prediction is at the end
-    
+
     oldPlot(y_train,name)
     newPlot(forecast_prediction,name)
     allPlot(y_train,forecast_prediction,500,name)
-    
+
 
 def printWorking():
     makeSpace()
     print("Working...")
     makeSpace()
+
 def main():
     getKey()
     name,forecast = getNameAndForecast()
     printWorking()
     predict(name,forecast)
-    
+
 if __name__ == "__main__":
     main()
