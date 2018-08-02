@@ -4,14 +4,39 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing, cross_validation
 import matplotlib.pyplot as plt
-quandl.ApiConfig.api_key = "..."
+import os
 
-def getData(name):     
+e_prompt = 'Is You API Key saved in an environmental variable? Please enter Yes Or No: '
+key_e_prompt = "What is the environmental variable name for your key? "
+key_prompt = "Please enter your API key for Quandl: "
+
+def getKey():
+    saved = input(e_prompt)
+    while (saved.lower()!='yes' and saved.lower()!='no'):
+        print("Invalid response")
+        saved = input(e_prompt)
+        
+    if saved.lower == 'yes':
+        environ_name = input(key_e_prompt)
+        quandl.ApiConfig.api_key = os.environ.get(str(environ_name))
+    else:
+        quandl.ApiConfig.api_key = input(key_prompt)
+        
+        
+def getNameAndForecast():
+    name = input("What is the abbreviation for the Stock you wish to view? ")
+    forecast = input("How far into the future would you like to predict? ")
+    forecast = int(forecast)
+    return name,forecast
+    
+
+def getData(name):   
+    
     data = quandl.get("WIKI/" + name)
     return data
     
-def preprocess(name, forecast):
-    data = getData(name)
+
+def preprocess(data, forecast):
     
     data = data[['Adj. Close']]
     data['Prediction'] = data[['Adj. Close']].shift(-forecast)
@@ -30,8 +55,44 @@ def preprocess(name, forecast):
     
     return X_forecast,X_train,y_train
 
+
+def makeSpace():
+    print()
+    print()
+    print()
+    
+    
+def oldPlot(y,name):
+    makeSpace()
+    plt.figure()
+    plt.title("Old Data for " + name)
+    plt.plot(y)
+    plt.ylabel('Price')
+    plt.xlabel('Days since founded')
+    makeSpace()
+    
+    
+def newPlot(y,name):
+    plt.figure()
+    plt.title("Predicted values for " + name)
+    plt.plot(y)
+    plt.ylabel('Price')
+    plt.xlabel('Days into the future')
+    makeSpace()
+    
+    
+def allPlot(y,yhat,backset,name):
+    plt.figure()
+    all_y = np.concatenate((y[(y.shape[0]-backset):,:],yhat),axis=0)
+    plt.title("Expected rise of " + name + ". Graph starts " + str(backset) + " days into the past, and ends with the predicted values for " + name + ".")
+    plt.plot(all_y)
+    plt.ylabel('Price')
+    plt.xlabel('Days since founded')
+    makeSpace()
+    
 def predict(name,forecast):
-    X_forecast,X_train,y_train = preprocess(name,forecast)
+    data = getData(name)
+    X_forecast,X_train,y_train = preprocess(data,forecast)
     
     regressor = LinearRegression()
     regressor.fit(X_train,y_train)
@@ -39,10 +100,21 @@ def predict(name,forecast):
     forecast_prediction = regressor.predict(X_forecast)
     forecast_prediction = forecast_prediction.reshape((forecast,1))
     #Visualizing trends in data. My Prediction is at the end
-    all_y = np.concatenate((y_train[4500:,:],forecast_prediction),axis=0)
     
-    plt.plot(all_y)
-    plt.ylabel('Price')
-    plt.xlabel('Days')
+    oldPlot(y_train,name)
+    newPlot(forecast_prediction,name)
+    allPlot(y_train,forecast_prediction,500,name)
+    
 
-predict("AMZN", 30)
+def printWorking():
+    makeSpace()
+    print("Working...")
+    makeSpace()
+def main():
+    getKey()
+    name,forecast = getNameAndForecast()
+    printWorking()
+    predict(name,forecast)
+    
+if __name__ == "__main__":
+    main()
