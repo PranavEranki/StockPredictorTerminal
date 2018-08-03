@@ -36,7 +36,7 @@ Finally, it will plot the growth of the stock from about a year ago up till the 
 ## Running the script
 
 7. Run the script. You will need to enter:
-  *   key or environmental variable name for the key
+  *   API key or environmental variable name for the key
   *   Stock abbreviation for the desired stock
   *   How many days into the future you want to predict
 

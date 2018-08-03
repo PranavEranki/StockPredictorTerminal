@@ -10,6 +10,7 @@ e_prompt = 'Is You API Key saved in an environmental variable? Please enter Yes 
 key_e_prompt = "What is the environmental variable name for your key? "
 key_prompt = "Please enter your API key for Quandl: "
 
+
 def getKey():
     saved = input(e_prompt)
     while (saved.lower()!='yes' and saved.lower()!='no'):
@@ -66,10 +67,10 @@ def oldPlot(y,name):
     makeSpace()
     plt.figure()
     plt.title("Old Data for " + name)
-    plt.plot(y)
+    plt.plot(y, color = 'red')
     plt.ylabel('Price')
     plt.xlabel('Days since founded')
-    matplotlib.pyplot.show()
+    plt.show()
     plt.show(block=True)
     makeSpace()
 
@@ -77,22 +78,23 @@ def oldPlot(y,name):
 def newPlot(y,name):
     plt.figure()
     plt.title("Predicted values for " + name)
-    plt.plot(y)
+    plt.plot(y, color = 'blue')
     plt.ylabel('Price')
     plt.xlabel('Days into the future')
-    matplotlib.pyplot.show()
+    plt.show()
     plt.show(block=True)
     makeSpace()
 
 
 def allPlot(y,yhat,backset,name):
     plt.figure()
-    all_y = np.concatenate((y[(y.shape[0]-backset):,:],yhat),axis=0)
+    y = y[(y.shape[0]-backset):,:]
     plt.title("Expected rise of " + name + ". Graph starts " + str(backset) + " days into the past, and ends with the predicted values for " + name + ".")
-    plt.plot(all_y)
+    plt.plot(y, color = 'red',label='Old Closing Prices')
+    plt.plot(yhat,color='blue', label = 'Predicted Closing Prices')
     plt.ylabel('Price')
     plt.xlabel('Days since founded')
-    matplotlib.pyplot.show()
+    plt.show()
     plt.show(block=True)
     makeSpace()
 
