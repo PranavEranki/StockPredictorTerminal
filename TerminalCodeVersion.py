@@ -2,7 +2,7 @@ import quandl
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
-from sklearn import preprocessing, cross_validation
+from sklearn import preprocessing, cross_validation, svm
 import matplotlib.pyplot as plt
 import os
 import warnings
@@ -129,8 +129,8 @@ def predict(name,forecast):
 
     oldPlot(y_train,name)
     newPlot(forecast_prediction,name)
-    print("An overall plot will not be generated.")
-    howfar = int(input("How far into the past would you like your overall graph to go? "))
+    print("An overall plot will now be generated.")
+    howfar = int(input("How many days into the past would you like your overall graph to go? "))
     allPlot(y_train,forecast_prediction,howfar,name)
 
 
@@ -147,3 +147,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
