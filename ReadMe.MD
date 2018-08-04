@@ -36,3 +36,19 @@ when prompted.
 If you get any errors, please bring up an issue and I will look into it ASAP.
 
 Thank you.
+
+
+
+## Screenshots
+
+Screenshot for the gathering of the data:
+
+![data](https://github.com/PranavEranki/StockPredictorTerminal/blob/master/images/prePredictions.PNG)
+
+Screenshot for the first two plots with test data gathered above ^.
+
+![firstTwo](https://github.com/PranavEranki/StockPredictorTerminal/blob/master/images/firstTwoPlots.PNG)
+
+Screenshot for the last overall plot with test data gathered above ^^.
+
+![final](https://github.com/PranavEranki/StockPredictorTerminal/blob/master/images/finalPlot.PNG)
