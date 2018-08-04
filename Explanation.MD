@@ -32,4 +32,4 @@ A piece of code which will validate if your API key is a real key or not. Could 
 # Current Bugs
 Sometimes, you get the error 'no module named quandl' if you run it from your terminal. The only fix I was able to find that worked for me was to run it from a code editor. I used Spyder from conda, and it worked fine for me.
 
-Other than that, there are none right now! Yay!
+Also, if you enter the wrong API Key, the code will run fine. However, after multiple calls, the code will give you the 'Wrong Stock abbreviation name entered' error. I know why this happens, but I do not have a fix for it.
