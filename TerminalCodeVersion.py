@@ -138,8 +138,6 @@ def main():
     name,forecast = getNameAndForecast()
     printWorking()
     predict(name,forecast)
-'''
+
 if __name__ == "__main__":
     main()
-'''
-getNameAndForecast()
