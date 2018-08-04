@@ -14,7 +14,7 @@ First, the old closing values of the stock are displayed.
 
 Once that is done, the predicted values for the next *n* are plotted on another graph.
 
-Finally, both the graphs are joined together, with the old values in one color and the new values in a new color, and displayed. For this, the program then asks the user to give them an integer value of how many days into the past they would like the data for that stock to be concatenated to the beginning of the predicted data. *This is confusing, here is an example*
+Finally, both the old values and new values are joined together and displayed. For this, the program then asks the user to give them an integer value of how many days into the past they would like the data for that stock to be concatenated to the beginning of the predicted data. *This is confusing, here is an example*
 
 Let's say the user enters Amazon as their stock, 30 days into the future, and 50 for the value in the final plot. The program will then take the predicted values for 30 days into the future, and paste them to the end of the closing stock data for 50 days ago.
 
