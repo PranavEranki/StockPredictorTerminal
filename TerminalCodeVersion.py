@@ -5,6 +5,9 @@ from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing, cross_validation
 import matplotlib.pyplot as plt
 import os
+import warnings
+warnings.filterwarnings("ignore")
+
 
 e_prompt = 'Is You API Key saved in an environmental variable? Please enter Yes Or No: '
 key_e_prompt = "What is the environmental variable name for your key? "
@@ -28,6 +31,7 @@ def StockCodeWorks(name):
         data = quandl.get("WIKI/" + name)
     except:
         return False;
+    
     return True;
 
 def getNameAndForecast():
@@ -103,11 +107,11 @@ def newPlot(y,name):
 def allPlot(y,yhat,backset,name):
     plt.figure()
     y = y[(y.shape[0]-backset):,:]
+    ally = np.concatenate((y,yhat))
     plt.title("Expected rise of " + name + ". Graph starts " + str(backset) + " days into the past, and ends with the predicted values for " + name + ".")
-    plt.plot(y, color = 'red',label='Old Closing Prices')
-    plt.plot(yhat,color='blue', label = 'Predicted Closing Prices')
+    plt.plot(ally,color='purple')
     plt.ylabel('Price')
-    plt.xlabel('Days since founded')
+    plt.xlabel('Days')
     plt.show()
     plt.show(block=True)
     makeSpace()
@@ -125,7 +129,9 @@ def predict(name,forecast):
 
     oldPlot(y_train,name)
     newPlot(forecast_prediction,name)
-    allPlot(y_train,forecast_prediction,500,name)
+    print("An overall plot will not be generated.")
+    howfar = int(input("How far into the past would you like your overall graph to go? "))
+    allPlot(y_train,forecast_prediction,howfar,name)
 
 
 def printWorking():
