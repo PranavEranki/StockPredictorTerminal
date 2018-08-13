@@ -42,7 +42,7 @@ def predict(name,forecast):
     X_forecast,X_train,y_train = preprocess(data,forecast)
 
     #regressor = LinearRegression()
-    regressor = Lasso(normalize=True, precompute = True)
+    regressor = Lasso()
     regressor.fit(X_train,y_train)
 
     forecast_prediction = regressor.predict(X_forecast)
