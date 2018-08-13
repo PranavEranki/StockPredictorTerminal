@@ -2,6 +2,7 @@ import quandl
 import numpy as np
 from sklearn import preprocessing
 from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Lasso
 import warnings
 
 import plotHelper
@@ -40,7 +41,8 @@ def predict(name,forecast):
     data = getData(name)
     X_forecast,X_train,y_train = preprocess(data,forecast)
 
-    regressor = LinearRegression()
+    #regressor = LinearRegression()
+    regressor = Lasso(normalize=True, precompute = True)
     regressor.fit(X_train,y_train)
 
     forecast_prediction = regressor.predict(X_forecast)
